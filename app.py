@@ -9,7 +9,13 @@ import os
 app = Flask(__name__)
 
 # Setup logging
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+
+# Allowed extensions for uploaded files
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -18,28 +24,26 @@ def index():
             if 'file' not in request.files:
                 logging.error("No file part")
                 return redirect(request.url)
-            
+
             file = request.files['file']
-            if file.filename == '':
-                logging.error("No selected file")
+            if file.filename == '' or not allowed_file(file.filename):
+                logging.error("No selected file or unsupported file type")
                 return redirect(request.url)
-            
-            # Use a temporary file for the uploaded image
-            with tempfile.NamedTemporaryFile(delete=False) as temp_input_file:
-                input_path = temp_input_file.name
-                file.save(input_path)
 
-                # Create a temporary file for the output sketch
-                with tempfile.NamedTemporaryFile(delete=False, suffix='.png') as temp_output_file:
-                    output_path = temp_output_file.name
+            # Use /tmp for the uploaded image
+            input_path = f"/tmp/{secure_filename(file.filename)}"
+            file.save(input_path)
+            logging.debug(f"Uploaded image saved at: {input_path}")
 
-                    # Convert image to sketch
-                    convert_to_sketch(input_path, output_path)
+            # Create a temporary file for the output sketch
+            output_path = f"/tmp/sketch_{os.path.basename(input_path)}"
+            convert_to_sketch(input_path, output_path)
+            logging.debug(f"Sketch image saved at: {output_path}")
 
-            # Serve the uploaded image and the sketch directly
+            # Serve the uploaded image and the sketch directly using url_for
             return render_template("index.html", 
-                                   uploaded_image=input_path,  # Direct file path for uploaded image
-                                   sketch_image=output_path)    # Direct file path for sketch image
+                                   uploaded_image=url_for('serve_temp_file', filename=os.path.basename(input_path)),  
+                                   sketch_image=url_for('serve_temp_file', filename=os.path.basename(output_path)))
 
         except Exception as e:
             logging.error(f"Error processing file: {e}")
@@ -47,15 +51,14 @@ def index():
 
     return render_template("index.html", uploaded_image=None, sketch_image=None)
 
-@app.route("/download/<path:filename>")
-def download_file(filename):
+@app.route("/temp/<filename>")
+def serve_temp_file(filename):
     try:
-        # Construct the full path for the file to download
-        path = os.path.join("/tmp", filename)
-        return send_file(path, as_attachment=True)
+        # Serve the temporary files created in the temporary directory
+        return send_file(f'/tmp/{filename}', as_attachment=False)
     except Exception as e:
-        logging.error(f"Error downloading file: {e}")
-        return "Internal Server Error", 500
+        logging.error(f"Error serving temporary file: {e}")
+        return "File Not Found", 404
 
 if __name__ == "__main__":
     app.run(debug=True)
