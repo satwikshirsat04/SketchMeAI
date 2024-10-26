@@ -61,21 +61,20 @@
 
         <div class="container mt-5">
             <div class="row">
-                {% if uploaded_image %}
-                    <div class="col-md-6 text-center">
-                        <h3 id="t2">Original Image</h3>
-                        <img src="{{ uploaded_image }}" class="output-image" alt="Uploaded Image">
-                    </div>
-                {% endif %}
-                
-                {% if sketch_image %}
-                    <div class="col-md-6 text-center">
-                        <h3 id="t3">Sketch Image</h3>
-                        <img src="{{ sketch_image }}" class="output-image" alt="Sketch Image">
-                        <a href="{{ url_for('download_file', filename=sketch_image.split('/')[-1]) }}" class="btn btn-success mt-3" id="download">Download Sketch</a>
-                    </div>
-                {% endif %}
+                <div class="col-md-6">
+                    <h3>Uploaded Image</h3>
+                    {% if uploaded_image %}
+                        <img src="{{ uploaded_image }}" class="img-fluid" alt="Uploaded Image">
+                    {% endif %}
+                </div>
+            <div class="col-md-6">
+                    <h3>Sketch Image</h3>
+                    {% if sketch_image %}
+                        <img src="{{ sketch_image }}" class="img-fluid" alt="Sketch Image">
+                    {% endif %}
             </div>
+        </div>
+
         </div>
         
 
