@@ -36,9 +36,10 @@ def index():
                     # Convert image to sketch
                     convert_to_sketch(input_path, output_path)
 
+            # Serve the uploaded image and the sketch directly
             return render_template("index.html", 
-                                   uploaded_image=input_path,  # Modify this line to display the uploaded image correctly
-                                   sketch_image=output_path)    # Modify this line to display the sketch image correctly
+                                   uploaded_image=input_path,  # Direct file path for uploaded image
+                                   sketch_image=output_path)    # Direct file path for sketch image
 
         except Exception as e:
             logging.error(f"Error processing file: {e}")
@@ -46,10 +47,15 @@ def index():
 
     return render_template("index.html", uploaded_image=None, sketch_image=None)
 
-@app.route("/download/<filename>")
+@app.route("/download/<path:filename>")
 def download_file(filename):
-    # This route may need to be modified if you're using temporary files
-    return send_file(filename, as_attachment=True)
+    try:
+        # Construct the full path for the file to download
+        path = os.path.join("/tmp", filename)
+        return send_file(path, as_attachment=True)
+    except Exception as e:
+        logging.error(f"Error downloading file: {e}")
+        return "Internal Server Error", 500
 
 if __name__ == "__main__":
     app.run(debug=True)
