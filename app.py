@@ -47,15 +47,24 @@ def index():
 
     return render_template("index.html", uploaded_image=None, sketch_image=None)
 
-@app.route("/download/<path:filename>")
-def download_file(filename):
+# @app.route("/download/<path:filename>")
+# def download_file(filename):
+#     try:
+#         # Construct the full path for the file to download
+#         path = os.path.join("/tmp", filename)
+#         return send_file(path, as_attachment=True)
+#     except Exception as e:
+#         logging.error(f"Error downloading file: {e}")
+#         return "Internal Server Error", 500
+
+@app.route("/temp/<filename>")
+def serve_temp_file(filename):
     try:
-        # Construct the full path for the file to download
-        path = os.path.join("/tmp", filename)
-        return send_file(path, as_attachment=True)
+        # Serve the temporary files created in the temporary directory
+        return send_file(f'/tmp/{filename}', as_attachment=False)
     except Exception as e:
-        logging.error(f"Error downloading file: {e}")
-        return "Internal Server Error", 500
+        logging.error(f"Error serving temporary file: {e}")
+        return "File Not Found", 404
 
 if __name__ == "__main__":
     app.run(debug=True)
