@@ -1,0 +1,112 @@
+/* body {
+    background-color: #f4f4f9;
+    color: #333;
+    font-family:Arial, sans-serif;
+}
+
+.container {
+    max-width: 700px;
+    margin-top: 50px;
+} */
+
+
+#title1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5em; /* Adjust font size as needed */
+    color: #333; /* Adjust color if needed */
+    text-align: center;
+    margin-top: 20px;
+
+}
+
+#t2{
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5em; /* Adjust font size as needed */
+    color: #333; /* Adjust color if needed */
+    text-align: center;
+    margin-top: 20px;
+}
+
+#t3{
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5em; /* Adjust font size as needed */
+    color: #333; /* Adjust color if needed */
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Centering the form container and adjusting styles */
+#upload-form {
+    max-width: 500px; /* Set max width for the form */
+    margin: 0 auto; /* Center the form horizontally */
+    margin-top: 40px;
+    padding: 20px; /* Add padding */
+    background-color: #f8f9fa; /* Light background for the form */
+    border: 1px solid #ddd; /* Border to define form */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+}
+
+/* Custom button style */
+#upload-form button {
+    background-color: #28a745; /* Change this to any color you prefer */
+    color: white;
+    font-size: 1.1em;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Hover effect for button */
+#upload-form button:hover {
+    background-color: #3f0c41; /* Darker green on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Active effect for button */
+#upload-form button:active {
+    background-color: #1e7e34; /* Darker shade when clicked */
+    transform: scale(0.98); /* Slightly shrink on click */
+    box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.2); /* Inner shadow effect */
+}
+
+/* Drag and drop area styling */
+#drop-area {
+    padding: 20px;
+    border: 2px dashed #46103f;
+    border-radius: 8px;
+    background-color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#drop-area.highlight {
+    background-color: #e9ecef; /* Lighter background when dragging over */
+}
+
+/* File input label */
+#drop-area-label {
+    display: block;
+    margin: 10px auto;
+    cursor: pointer;
+    font-weight: bold;
+    color: #070d14;
+}
+/* Styling for uploaded and converted images */
+.output-image {
+    max-width: 100%; /* Use full width within the grid column */
+    height: auto; /* Maintain aspect ratio */
+    border: 1px solid #ddd; /* Optional: Add border */
+    border-radius: 8px; /* Optional: Rounded corners */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    margin-top: 15px;
+}
+#download:hover {
+    background-color: #3f0c41; /* Darker green on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+
+
+
