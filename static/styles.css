@@ -107,6 +107,21 @@
     transform: scale(1.05); /* Slightly enlarge on hover */
 }
 
+.footer-container {
+    margin-top: 1%;
+    /* background-color: #ffffff; */
+    color: #000000;
+    padding: 10px 0;
+    text-align: center;
+    width: 100%;
+    bottom: 0;
+    /* position: absolute; */
+} 
+
+.footer-container a {
+    color: #000000;
+    margin: 0 5px;
+}
 
 
 
