@@ -28,3 +28,5 @@ def convert_to_sketch(input_path, output_path):
     sketch_img = cv2.divide(gray_img, inverted_blurred_img, scale=256.0)
     # Save the sketch image
     cv2.imwrite(output_path, sketch_img)
+
+logging.debug(f"Sketch image saved at: {output_path}")
