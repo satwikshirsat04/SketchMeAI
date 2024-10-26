@@ -108,15 +108,16 @@
 }
 
 .footer-container {
-    margin-top: 20%;
-    /* background-color: #ffffff; */
+    background-color: #ffffff; /* Uncomment this if you want a background color */
     color: #000000;
     padding: 10px 0;
     text-align: center;
     width: 100%;
-    bottom: 0;
-    /* position: absolute; */
-} 
+    position: fixed;  
+    left: 0;         
+    bottom: 0;       
+    z-index: 1000;   
+}
 
 .footer-container a {
     color: #000000;
