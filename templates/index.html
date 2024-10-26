@@ -64,22 +64,17 @@
                 <div class="col-md-6">
                     <h3>Uploaded Image</h3>
                     {% if uploaded_image %}
-                        <img src="{{ uploaded_image }}" class="img-fluid" alt="Uploaded Image">
+                        <img src="{{ url_for('serve_temp_file', filename=uploaded_image.split('/')[-1]) }}" class="img-fluid" alt="Uploaded Image">
                     {% endif %}
                 </div>
-            <div class="col-md-6">
+                <div class="col-md-6">
                     <h3>Sketch Image</h3>
                     {% if sketch_image %}
-                        <img src="{{ sketch_image }}" class="img-fluid" alt="Sketch Image">
+                        <img src="{{ url_for('serve_temp_file', filename=sketch_image.split('/')[-1]) }}" class="img-fluid" alt="Sketch Image">
                     {% endif %}
+                </div>
             </div>
         </div>
-
-        </div>
-        
-
-
-        
     </div>
 
 
