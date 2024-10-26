@@ -9,7 +9,7 @@ import os
 app = Flask(__name__)
 
 # Setup logging
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.DEBUG)
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -28,7 +28,6 @@ def index():
             with tempfile.NamedTemporaryFile(delete=False) as temp_input_file:
                 input_path = temp_input_file.name
                 file.save(input_path)
-                logging.debug(f"Uploaded image saved at: {input_path}")
 
                 # Create a temporary file for the output sketch
                 with tempfile.NamedTemporaryFile(delete=False, suffix='.png') as temp_output_file:
@@ -36,12 +35,11 @@ def index():
 
                     # Convert image to sketch
                     convert_to_sketch(input_path, output_path)
-                    logging.debug(f"Sketch image saved at: {output_path}")
 
             # Serve the uploaded image and the sketch directly
             return render_template("index.html", 
-                                   uploaded_image=url_for('serve_temp_file', filename=os.path.basename(input_path)),  # URL for uploaded image
-                                   sketch_image=url_for('serve_temp_file', filename=os.path.basename(output_path)))    # URL for sketch image
+                                   uploaded_image=input_path,  # Direct file path for uploaded image
+                                   sketch_image=output_path)    # Direct file path for sketch image
 
         except Exception as e:
             logging.error(f"Error processing file: {e}")
@@ -49,14 +47,15 @@ def index():
 
     return render_template("index.html", uploaded_image=None, sketch_image=None)
 
-@app.route("/temp/<filename>")
-def serve_temp_file(filename):
+@app.route("/download/<path:filename>")
+def download_file(filename):
     try:
-        # Serve the temporary files created in the temporary directory
-        return send_file(f'/tmp/{filename}', as_attachment=False)
+        # Construct the full path for the file to download
+        path = os.path.join("/tmp", filename)
+        return send_file(path, as_attachment=True)
     except Exception as e:
-        logging.error(f"Error serving temporary file: {e}")
-        return "File Not Found", 404
+        logging.error(f"Error downloading file: {e}")
+        return "Internal Server Error", 500
 
 if __name__ == "__main__":
     app.run(debug=True)
