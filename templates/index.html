@@ -71,8 +71,11 @@
                     <h3>Sketch Image</h3>
                     {% if sketch_image %}
                         <img src="{{ url_for('serve_temp_file', filename=sketch_image.split('/')[-1]) }}" class="img-fluid" alt="Sketch Image">
+                        <br>
+                        <a href="{{ url_for('serve_temp_file', filename=sketch_image.split('/')[-1]) }}" class="btn btn-success mt-2" download>Download Sketch</a>
                     {% endif %}
                 </div>
+
             </div>
         </div>
     </div>
