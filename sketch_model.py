@@ -29,4 +29,3 @@ def convert_to_sketch(input_path, output_path):
     # Save the sketch image
     cv2.imwrite(output_path, sketch_img)
 
-logging.debug(f"Sketch image saved at: {output_path}")
